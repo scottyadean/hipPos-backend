@@ -2,24 +2,6 @@ const mongoose = require("mongoose");
 const ShortUniqueId = require("short-unique-id");
 const strings = require('../utils/strings');
 
-// const qtyByLocation = new mongoose.Schema({
-//     location: { type: mongoose.Schema.Types.ObjectId, ref: 'location' },
-//     qty: {type: Number, default: 0},
-//     sold: {type: Number, default: 0},
-//     returns: {type: Number, default: 0},
-// });
-
-
-// const AttrSchema = new mongoose.Schema({
-//         size: { type: String, default: ""},
-//         color: { type: String, default: ""},
-//         width: { type: Number, default: 0 },
-//         heigth: { type: Number, default: 0 },
-//         depth: { type: Number, default: 0 },
-//         unit: { type: String, default: "in" }
-//     });
-
-    
 const ItemSchema = new mongoose.Schema({
     name: { type: String, unique: true, required: [true, 'Name is required'] },
     description: { type: String, default: ""},
@@ -27,7 +9,7 @@ const ItemSchema = new mongoose.Schema({
     image: { type: String, default:'http://picsum.photos/500/500?random'},
     slug:{ type: String, default: "" },
     process: { type: String, default: "scan" },
-    code: { type: String, default: new ShortUniqueId({ length: 6 }).rnd().toLowerCase() },
+    code: { type: String, unique: true, required: [true, "A unique code is reqired for items"] },
     sku: { type: String, default: "" },
     qty: { type: Number, default: 0 },
     //qty_detail: [qtyByLocation],

@@ -18,6 +18,15 @@ module.exports = {
 
       dollars_to_cents(amount){
         return parseInt(amount.toString().replace(/[^0-9]/gi, ''));
-      }    
+      },
 
+      code( prefix, count ) {
+        return `${prefix}${count.toString().padStart(5, '0')}`; 
+      },
+
+      prefix(tag){
+          let str = tag.toLowerCase().replace("and", "").replace("the", ""); 
+          return str.match(/\b\w/g).join('')
+      }
+   
 }

@@ -5,7 +5,10 @@
  */
 
 const ItemModel = require('../models/ItemModel');
+const CategoryModel = require('../models/CategoryModel');
 const mongoose = require('mongoose');
+const strings = require('../utils/strings');
+
 
 module.exports = {
 
@@ -59,11 +62,16 @@ module.exports = {
         
         try{
             const props = req.body;
+
+            const category = await CategoryModel.findOne({_id: props.category}).select("name");
+            const itemCount = await ItemModel.countDocuments();
+            
             const data = {
                 name: props.name,
                 description: props.description,
                 image: props.image,
                 process: props.process,
+                code: strings.code( strings.prefix(category.name), itemCount ),
                 sku: props.sku,
                 qty: parseInt(props.qty),
                 price: parseFloat(props.price),
